@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        
+        <!-- font Awesome -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      
+        
+        <style>
+             @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+             
+              body
+              {
+              font-family: 'Hanna', sans-serif;
+              }
+        </style>
+    
+    </head>
+        <body>
+            <br/><br/><br/>
+            <h1 align="center">스택라이온에서 답변이 채택된 글만을 Nokogiri를 이용해 크롤링 해옵니다 </h1>
+            <h3 align="center">스택라이온 서버를 위하여 조금씩 테이블로 가져와서 페이징을 하도록 구현해보았습니다</h3>
+            <h3 align="center">너무 빨리 페이징하면 스택라이온 서버에 무리가 갑니다 ㅠ_ㅠ</h3>
+            
+            <br/><br/>
+            
+            <table class="table table-hover" align="center">
+            <tr>
+                <td>#</td>
+                <td>Title</td>
+                <td>URL</td>
+            </tr>
+            <% for loopNum in 0...(@questionTitleArr.length) %> <!-- 질문들의 제목과 url을 출력하는 반복문-->
+                <tr>
+                    <td> <%= loopNum + 1 %> </td>
+                    <td> <%= @questionTitleArr[loopNum] %> </td>
+                    <% @url =  @questionUrlArr[loopNum].to_s %>
+                    <td><a href="<%= @url %>" target="_blank"><%= @url %></a></td>
+                </tr>
+            <% end %>
+        </table>
+        <div class="centered">
+            	
+            <form action="http://stacklion-parsing-yoohoogun114.c9.io/stackparsing/stacklionquestion" method="GET">
+                <span style="color:#ffffff"> Nowpage:  <%= @nowpage %> </span> <br/><!-- 현재페이지 표시 -->
+                <% if @nowpage.to_i-1 !=0%> <!-- 첫페이지(1)일때 앞페이지는 0이므로 이전으로가기 버튼을 표시하지 않아야함-->
+                <input type="submit" value="<%=@nowpage.to_i-1%>" class="btn btn-default" style="color:#000000;" onclick="" name="fpage">
+                <% end %><!-- 원래 게시글의 끝번호도 제한을 두어야 하는데 게시글을 하나하나 조사하며 끝번호까지 조사하면 서버에 무리가 가므로 생략하였습니다.-->
+                <input type="submit" value="<%=@nowpage.to_i+1%>" class="btn btn-default" style="color:#000000;" onclick="" name="fpage">      
+            </form>
+        </div>
+        
+        <br/><br/><br/><br/><br/>
+        <footer>
+      <div name="whitecolor" style="color:#ffffff;">  
+      <p align="center" style="font-size:50px" > Dev's</p>
+      <p align="center" style="font-size:50px"> Contact And Social </p>
+      <hr width="70%">
+      <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-2"> </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+          <a href="http://mail.naver.com/">
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="font-size:50pt;"> </span>
+            </a>
+            <br/>
+            Email: <br/>yoohoogun114@naver.com
+            </br>
+        </div>
+        
+        <div class="col-md-2 col-sm-2 col-xs-2">
+           <i class="fa fa-phone-square" style="font-size: 70px;color:#2965a8;"></i>
+            <br/>
+            Telephone:<br/>010-4197-5132
+            </br>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+           <a href="https://www.facebook.com/?q=#/profile.php?id=100001861926395"> <i class="fa fa-facebook-square" style="font-size:70px;"></i>
+       </a> <br/>
+       FaceBook:<br/>
+        yoohoogun114
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+          <a href="https://mail.google.com/">
+           <i class="fa fa-google" style="font-size: 70px;"></i>
+           </a><br/>
+            Google:<br/>yoohoogun114@Gmail.com
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2"> </div>
+      </div>
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-3"></div>
+      </footer>
+        </body>
+     </div>
+</html>
